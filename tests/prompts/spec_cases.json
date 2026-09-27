@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P01",
+    "prompt": "I need a power supply with 2 outputs: 5V fixed and 1-12V variable. Board 8cm x 10cm, single layer, low budget, no height limit.",
+    "expected": {
+      "project_type": "power_supply",
+      "must_ask_about": ["input voltage", "output current"],
+      "must_warn_about": ["1V below LM317 minimum (~1.25V)"]
+    }
+  },
+  {
+    "id": "P02",
+    "prompt": "A 12V DC adapter powered board that drives 10 white LEDs at 20mA each. Around 5x5 cm.",
+    "expected": {
+      "project_type": "led",
+      "must_ask_about": [],
+      "must_warn_about": []
+    }
+  },
+  {
+    "id": "P03",
+    "prompt": "LED flasher using a 555 timer, blinks about once per second, runs on a 9V battery.",
+    "expected": {
+      "project_type": "timer",
+      "must_ask_about": ["board size"],
+      "must_warn_about": []
+    }
+  },
+  {
+    "id": "P04",
+    "prompt": "Make me a 4 layer SMD board for an ESP32 with USB-C.",
+    "expected": {
+      "project_type": "other",
+      "must_ask_about": [],
+      "must_warn_about": ["only single-layer THT supported"]
+    }
+  },
+  {
+    "id": "P05",
+    "prompt": "5V 3A supply from a 24V adapter using a linear regulator, 6x8 cm.",
+    "expected": {
+      "project_type": "power_supply",
+      "must_ask_about": [],
+      "must_warn_about": ["~57W dissipation in a linear regulator; needs a big heatsink or a switching regulator"]
+    }
+  }
+]

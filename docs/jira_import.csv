@@ -1,0 +1,32 @@
+Issue Id,Parent Id,Issue Type,Summary,Description,Story Points,Labels,Sprint
+E1,,Epic,Project Infrastructure,"Jira, GitHub, CI, docs, team process",,,
+E2,,Epic,Spec Parsing,Prompt -> validated Spec JSON with clarifying questions,,,
+E3,,Epic,Circuit Design,Validated templates + value calculation -> Netlist,,,
+E4,,Epic,Component Sourcing,"Component DB, search/RAG, BOM",,,
+E5,,Epic,Layout Engine,"Trace width, placement, routing, jumpers",,,
+E6,,Epic,Review & DRC,Design rule checks + Review Agent,,,
+E7,,Epic,UI & Export,"Streamlit UI, SVG/PDF export, deployment",,,
+S1,E1,Story,"Set up Jira board, epics, Definition of Done and team charter",SM task. Board columns: To Do / In Progress / In Review / Done. Add DoD from docs/team_charter.md.,2,owner-afaq,Sprint 1
+S2,E1,Story,"Create GitHub repo, protect main, create dev branch, add PR template",Push starter scaffold. Branch protection: PR + 1 review required on main and dev.,2,owner-hamdan,Sprint 1
+S3,E1,Story,Connect GitHub for Jira integration,Commits/PRs with ticket keys should appear on Jira tickets.,1,owner-afaq,Sprint 1
+S4,E1,Story,Every member runs hello_gemini with their own API key,Each member makes one commit from own account (e.g. add name to README). AC: 4 members show in GitHub contributors.,1,owner-hamna,Sprint 1
+S5,E2,Story,"Finalise shared Pydantic schemas (Spec, Netlist, BOM)",Review core/schemas.py with Hamdan; freeze v1 by end of sprint.,5,owner-afaq,Sprint 1
+S6,E2,Story,Spec Agent v0 with structured output and clarification loop,AC: P01 in tests/prompts asks about input voltage + current and warns about 1V.,5,owner-afaq,Sprint 1
+S7,E2,Story,Write 10 prompt test cases with expected specs,"Extend tests/prompts/spec_cases.json from 5 to 10, include edge cases.",3,owner-hamdan,Sprint 1
+S8,E5,Story,IPC-2221 trace width calculator with unit tests,"Starter code exists in core/trace_width.py. Understand it, own it, extend tests.",3,owner-shammas,Sprint 1
+S9,E5,Story,Spike: grid maze router (A*) on a toy 3-net board,Timeboxed research. Output: prototype + short note in docs/ on approach.,5,owner-shammas,Sprint 1
+S10,E4,Story,Curated THT component list v0 (30 parts),"data/components.json: regulators, diodes, caps, resistors, LEDs, 555, connectors. Fields: mpn, package, footprint, ratings.",3,owner-hamna,Sprint 1
+S11,E1,Story,SRS document and architecture diagram,"docs/SRS.md: scope, functional/non-functional requirements, assumptions (1 layer, THT).",3,owner-hamna,Sprint 1
+S12,E1,Story,PCB 101 session for the team,"Footprints, packages, trace width, clearance, single-layer routing, jumpers, toner transfer.",2,owner-hamdan,Sprint 1
+S13,E3,Story,"Circuit templates: 7805, LM317, 555 flasher, LED array",JSON templates with pin-level connections.,8,owner-hamdan,
+S14,E3,Story,"Value calculator (LM317 divider, LED resistors, caps)",,5,owner-hamdan,
+S15,E3,Story,Circuit Designer Agent: pick template + parameters -> Netlist,,8,owner-afaq,
+S16,E4,Story,BOM generation + CSV export,,3,owner-hamna,
+S17,E4,Story,Sourcing Agent with web search grounding + DB validation,Reject any part not verifiable in DB or search.,8,owner-hamna,
+S18,E5,Story,"Placement engine (connectors on edges, heat parts near edge)",,8,owner-shammas,
+S19,E5,Story,Router with rip-up/reroute and jumper fallback,,13,owner-shammas,
+S20,E6,Story,"DRC: clearance, trace width, board outline",,5,owner-hamdan,
+S21,E6,Story,Review Agent: explain DRC failures and trigger re-run,,5,owner-afaq,
+S22,E7,Story,Streamlit UI,,5,owner-hamna,
+S23,E7,Story,Mirrored PDF/SVG export for toner transfer,,3,owner-hamna,
+S24,E6,Story,Etch and test a board designed by the system,Final demo artefact.,5,owner-hamdan,

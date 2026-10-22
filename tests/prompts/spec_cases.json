@@ -2,46 +2,81 @@
   {
     "id": "P01",
     "prompt": "I need a power supply with 2 outputs: 5V fixed and 1-12V variable. Board 8cm x 10cm, single layer, low budget, no height limit.",
-    "expected": {
-      "project_type": "power_supply",
-      "must_ask_about": ["input voltage", "output current"],
-      "must_warn_about": ["1V below LM317 minimum (~1.25V)"]
-    }
+    "expected_type": "power_supply",
+    "ask_keywords": ["voltage", "current"],
+    "warn_keywords": ["1.25"],
+    "note": "Input voltage and rail currents missing. 1 V is below the LM317 minimum."
   },
   {
     "id": "P02",
     "prompt": "A 12V DC adapter powered board that drives 10 white LEDs at 20mA each. Around 5x5 cm.",
-    "expected": {
-      "project_type": "led",
-      "must_ask_about": [],
-      "must_warn_about": []
-    }
+    "expected_type": "led",
+    "ask_keywords": [],
+    "warn_keywords": [],
+    "note": "Complete request. Should not need questions or warnings."
   },
   {
     "id": "P03",
     "prompt": "LED flasher using a 555 timer, blinks about once per second, runs on a 9V battery.",
-    "expected": {
-      "project_type": "timer",
-      "must_ask_about": ["board size"],
-      "must_warn_about": []
-    }
+    "expected_type": "timer",
+    "ask_keywords": ["size|dimension"],
+    "warn_keywords": [],
+    "note": "Board size missing."
   },
   {
     "id": "P04",
     "prompt": "Make me a 4 layer SMD board for an ESP32 with USB-C.",
-    "expected": {
-      "project_type": "other",
-      "must_ask_about": [],
-      "must_warn_about": ["only single-layer THT supported"]
-    }
+    "expected_type": "other",
+    "ask_keywords": [],
+    "warn_keywords": ["layer|smd"],
+    "note": "Out of scope. Must warn that only single-layer THT is supported."
   },
   {
     "id": "P05",
     "prompt": "5V 3A supply from a 24V adapter using a linear regulator, 6x8 cm.",
-    "expected": {
-      "project_type": "power_supply",
-      "must_ask_about": [],
-      "must_warn_about": ["~57W dissipation in a linear regulator; needs a big heatsink or a switching regulator"]
-    }
+    "expected_type": "power_supply",
+    "ask_keywords": [],
+    "warn_keywords": ["heatsink|switching|dissipat"],
+    "note": "About 57 W of heat in a linear regulator."
+  },
+  {
+    "id": "P06",
+    "prompt": "Unregulated DC supply from a 12V AC transformer: bridge rectifier and a big filter capacitor, 1A output, 5x7 cm board.",
+    "expected_type": "power_supply",
+    "ask_keywords": [],
+    "warn_keywords": [],
+    "note": "Simple, complete request."
+  },
+  {
+    "id": "P07",
+    "prompt": "A transistor circuit so an Arduino pin can switch a 12V relay. I have a 12V supply. 4x4 cm.",
+    "expected_type": "switching",
+    "ask_keywords": ["current|coil|relay"],
+    "warn_keywords": [],
+    "note": "Relay coil current is not given."
+  },
+  {
+    "id": "P08",
+    "prompt": "3.3V output from a 5V USB supply using an LM317, 300mA, board 4x5 cm.",
+    "expected_type": "power_supply",
+    "ask_keywords": [],
+    "warn_keywords": ["headroom|dropout"],
+    "note": "Only 1.7 V headroom. The LM317 needs about 3 V."
+  },
+  {
+    "id": "P09",
+    "prompt": "Adjustable 0-30V bench power supply, 5A.",
+    "expected_type": "power_supply",
+    "ask_keywords": ["input|source|voltage", "size|dimension"],
+    "warn_keywords": ["1.25"],
+    "note": "0 V impossible with LM317; input and board size missing."
+  },
+  {
+    "id": "P10",
+    "prompt": "make me a cool led thing",
+    "expected_type": "led",
+    "ask_keywords": ["size|dimension", "power|voltage|battery|supply"],
+    "warn_keywords": [],
+    "note": "Very vague. Must ask questions, not invent a design."
   }
 ]

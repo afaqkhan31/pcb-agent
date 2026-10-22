@@ -3,6 +3,8 @@
 Every agent reads and writes these models. If you change a field here,
 tell the team in the PR description — other stages depend on it.
 
+Schema v1.1 (16 Oct 2026): Part/Netlist/BOMLine updated for EasyEDA + LCSC.
+
 Note: fields have no default values on purpose. Gemini structured output
 works most reliably when every field is present (use None for "unknown").
 """
@@ -73,12 +75,16 @@ class Part(BaseModel):
     ref: str
     value: str = Field(description="e.g. '10k', '100uF 25V', 'LM317T'")
     description: str
-    package: str = Field(description="e.g. 'TO-220', 'Axial_0.4in', 'Radial_D8mm'")
-    footprint: str = Field(description="Footprint name in our footprint library")
+    catalog_key: str = Field(description="MPN key in data/components.json, e.g. 'LM317T' or 'RES-0.25W'")
+    lcsc: Optional[str] = Field(description="LCSC C-number EasyEDA places; null until sourced")
+    package: Optional[str] = Field(description="e.g. 'TO-220'; EasyEDA supplies the real footprint")
+    pins: dict[str, str] = Field(description="Pin number -> pin name, e.g. {'1': 'IN', '2': 'GND', '3': 'OUT'}")
+    pinout_verified: bool = Field(description="True if the pinout came from the curated catalog")
 
 
 class Netlist(BaseModel):
-    template_id: str = Field(description="Which validated circuit template this came from")
+    """Built by deterministic code (templates), never by the LLM."""
+    blocks: list[str] = Field(description="Template blocks used, e.g. ['power_input', 'fixed_regulator:5V']")
     parts: list[Part]
     nets: list[Net]
 
@@ -88,8 +94,9 @@ class BOMLine(BaseModel):
     refs: list[str]
     qty: int
     value: str
-    package: str
+    package: Optional[str]
     mpn: Optional[str] = Field(description="Manufacturer part number, validated against data/components.json")
+    lcsc: Optional[str] = Field(description="LCSC C-number; null means it still has to be sourced")
     datasheet_url: Optional[str]
     unit_price: Optional[float]
     notes: Optional[str]
@@ -98,3 +105,31 @@ class BOMLine(BaseModel):
 class BOM(BaseModel):
     lines: list[BOMLine]
     jumpers: int = Field(description="Number of wire jumpers the router needed")
+
+
+# ------------------------------------------------- Stage 2a: design plan (LLM)
+class TemplateId(str, Enum):
+    fixed_regulator = "fixed_regulator"
+    adjustable_regulator = "adjustable_regulator"
+    led_array = "led_array"
+    ne555_flasher = "ne555_flasher"
+
+
+class BlockRequest(BaseModel):
+    """One circuit block the Circuit Designer Agent asks for. Unused fields = null."""
+    template_id: TemplateId
+    rail_name: Optional[str] = Field(description="Output net name for regulators, e.g. '5V' or 'VAR'")
+    v_out: Optional[float] = Field(description="fixed_regulator: output voltage (5, 9 or 12)")
+    v_out_min: Optional[float] = Field(description="adjustable_regulator: lowest output voltage")
+    v_out_max: Optional[float] = Field(description="adjustable_regulator: highest output voltage")
+    i_out_a: Optional[float] = Field(description="Regulators: max output current in amps")
+    led_count: Optional[int] = Field(description="led_array: number of LEDs")
+    led_color: Optional[str] = Field(description="led_array / ne555_flasher: red, green, yellow, orange, blue or white")
+    led_current_ma: Optional[float] = Field(description="led_array / ne555_flasher: current per LED in mA")
+    frequency_hz: Optional[float] = Field(description="ne555_flasher: blink frequency in Hz")
+
+
+class DesignPlan(BaseModel):
+    blocks: list[BlockRequest] = Field(description="Blocks to build, in order. The power input is added automatically.")
+    reverse_protection: bool = Field(description="Add a series diode against reversed DC input (costs ~1 V)")
+    explanation: str = Field(description="One or two sentences: why these blocks")

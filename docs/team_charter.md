@@ -21,18 +21,31 @@ Any PR touching templates, design rules, trace widths, footprints or DRC needs H
 
 In a four-person team, the PO and SM also write code. The role adds duties; it doesn't remove development work.
 
+## Definition of Ready
+A story can enter a sprint when:
+1. Written as a user story: "As a <who>, I want <what>, so that <why>".
+2. Has at least 3 testable acceptance criteria.
+3. Estimated in story points by the team (1, 2, 3, 5, 8; anything bigger is split).
+4. Linked to an epic and assigned to one owner.
+5. Dependencies are known (which story or PR must be merged first).
+6. Small enough to finish inside one sprint.
+
 ## Definition of Done
 A story is Done when:
-1. The code is merged into `dev` through a PR reviewed by at least one other member
-2. The Jira ticket key is in the branch name and commit messages, and the ticket is closed
-3. Tests pass (`pytest`) and new logic has at least one test
-4. It was shown in the sprint review
+1. All acceptance criteria are met.
+2. Code is merged into dev through a pull request approved by another member (nobody merges their own PR).
+3. Every commit message starts with the Jira key as a Smart Commit, e.g. "SCRUM-12 #comment add LM317 template".
+4. pytest passes and every new piece of logic has at least one test.
+5. No API keys or .env files are committed.
+6. Docs updated if behaviour changed (README or docs/).
+7. The Jira issue is moved to Done and the work is shown in the sprint review.
 
 ## Git workflow
 - `main`: protected, always demo-ready. Merged from `dev` at the end of each sprint only.
 - `dev`: integration branch. PRs go here.
-- Feature branches: `feature/PCBA-12-short-name`
-- Commit messages: `PCBA-12: add Spec schema`
+- Feature branches: `feature/SCRUM-12-short-name`
+- Commit messages are Jira Smart Commits: `SCRUM-12 #comment add Spec schema`
+- Your `git config user.email` must be the same email as your Jira account, or Smart Commits are ignored.
 - Commit from your **own** GitHub account; individual contributions are graded.
 - Never commit `.env` or API keys.
 

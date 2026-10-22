@@ -1,0 +1,38 @@
+[
+  {
+    "mpn": "L7805CV",
+    "lcsc": "C111887",
+    "category": "regulator",
+    "description": "5 V 1.5 A fixed positive linear regulator (STMicroelectronics)",
+    "package": "TO-220",
+    "pins": {"1": "IN", "2": "GND", "3": "OUT"},
+    "v_max": 35,
+    "i_max_a": 1.5,
+    "power_w": null,
+    "notes": "Needs about 2-3 V headroom. 0.33 uF in, 0.1 uF out."
+  },
+  {
+    "mpn": "1N4007-TP",
+    "lcsc": "C78736",
+    "category": "diode",
+    "description": "1000 V 1 A general purpose rectifier diode (MCC)",
+    "package": "DO-41",
+    "pins": {"1": "K", "2": "A"},
+    "v_max": 1000,
+    "i_max_a": 1.0,
+    "power_w": null,
+    "notes": "Band marks the cathode."
+  },
+  {
+    "mpn": "CAP-ELEC-100UF-25V",
+    "lcsc": "C44601",
+    "category": "capacitor_electrolytic",
+    "description": "100 uF 25 V radial electrolytic capacitor, 6.3 x 11 mm",
+    "package": "Radial D6.3mm P2.5mm",
+    "pins": {"1": "+", "2": "-"},
+    "v_max": 25,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Use at most about 80% of rated voltage."
+  }
+]

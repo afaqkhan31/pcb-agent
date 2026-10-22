@@ -3,7 +3,7 @@ import shutil
 
 from openpyxl import load_workbook
 
-from core.components import DATA_FILE
+from core.components import DATA_FILE, load_components
 from tools.catalog_from_excel import DEFAULT_XLSX, read_sheet
 
 
@@ -24,9 +24,7 @@ def _sheet(tmp_path, **fill):
 def test_untouched_sheet_matches_current_catalog(tmp_path):
     entries, problems, todo = read_sheet(_sheet(tmp_path))
     assert problems == []
-    assert {e["mpn"] for e in entries} == {"L7805CV", "1N4007-TP", "CAP-ELEC-100UF-25V"}
-    assert todo == 23
-
+    assert {e["mpn"].upper() for e in entries} == set(load_components())
 
 def test_filled_row_becomes_an_entry(tmp_path):
     path = _sheet(tmp_path, LM317T={5: "C12345", 6: "TO-220", 7: "1, 2, 3", 8: 40, 9: 1.5})

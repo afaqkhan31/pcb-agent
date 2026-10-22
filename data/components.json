@@ -1,15 +1,18 @@
 [
   {
-    "mpn": "L7805CV",
-    "lcsc": "C111887",
-    "category": "regulator",
-    "description": "5 V 1.5 A fixed positive linear regulator (STMicroelectronics)",
-    "package": "TO-220",
-    "pins": {"1": "IN", "2": "GND", "3": "OUT"},
-    "v_max": 35,
-    "i_max_a": 1.5,
+    "mpn": "KF301-5.0-2P",
+    "lcsc": "C474881",
+    "category": "connector",
+    "description": "2-pin 5.0 mm screw terminal block",
+    "package": "Through Hole P=5.0mm",
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "v_max": 250,
+    "i_max_a": 17,
     "power_w": null,
-    "notes": "Needs about 2-3 V headroom. 0.33 uF in, 0.1 uF out."
+    "notes": "Cixi Kefa 2-pin screw terminal, 5 mm pitch. Pins: standard for package, verify in EasyEDA."
   },
   {
     "mpn": "1N4007-TP",
@@ -17,11 +20,82 @@
     "category": "diode",
     "description": "1000 V 1 A general purpose rectifier diode (MCC)",
     "package": "DO-41",
-    "pins": {"1": "K", "2": "A"},
+    "pins": {
+      "1": "K",
+      "2": "A"
+    },
     "v_max": 1000,
-    "i_max_a": 1.0,
+    "i_max_a": 1,
     "power_w": null,
     "notes": "Band marks the cathode."
+  },
+  {
+    "mpn": "L7805CV",
+    "lcsc": "C111887",
+    "category": "regulator",
+    "description": "5 V 1.5 A fixed positive linear regulator (STMicroelectronics)",
+    "package": "TO-220",
+    "pins": {
+      "1": "IN",
+      "2": "GND",
+      "3": "OUT"
+    },
+    "v_max": 35,
+    "i_max_a": 1.5,
+    "power_w": null,
+    "notes": "Needs about 2-3 V headroom. 0.33 uF in, 0.1 uF out."
+  },
+  {
+    "mpn": "LM317T",
+    "lcsc": "C361026",
+    "category": "regulator",
+    "description": "Adjustable 1.25-37 V 1.5 A linear regulator",
+    "package": "TO-220",
+    "pins": {
+      "1": "ADJ",
+      "2": "OUT",
+      "3": "IN"
+    },
+    "v_max": 40,
+    "i_max_a": 1.5,
+    "power_w": null,
+    "notes": "ST LM317T, TO-220AB-3. Max 40 V is the input-output voltage difference. Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "NE555P",
+    "lcsc": "C46749",
+    "category": "timer_ic",
+    "description": "NE555 timer, DIP-8",
+    "package": "DIP-8",
+    "pins": {
+      "1": "GND",
+      "2": "TRIG",
+      "3": "OUT",
+      "4": "RESET",
+      "5": "CTRL",
+      "6": "THR",
+      "7": "DIS",
+      "8": "VCC"
+    },
+    "v_max": 16,
+    "i_max_a": 0.2,
+    "power_w": null,
+    "notes": "TI NE555P. Supply 4.5-16 V, output up to 200 mA. Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "LED-5MM-RED",
+    "lcsc": "C87271",
+    "category": "led",
+    "description": "5 mm red LED",
+    "package": "LED D5mm Through Hole",
+    "pins": {
+      "1": "K",
+      "2": "A"
+    },
+    "v_max": 5,
+    "i_max_a": 0.02,
+    "power_w": null,
+    "notes": "Everlight 333-2SURD/S530-A3, red, 20 mA, Vf about 2 V. CHECK: 5 V reverse voltage is a typical value, not on the LCSC page. Pins: standard for package, verify in EasyEDA. Longer leg is the anode (A)."
   },
   {
     "mpn": "CAP-ELEC-100UF-25V",
@@ -29,7 +103,10 @@
     "category": "capacitor_electrolytic",
     "description": "100 uF 25 V radial electrolytic capacitor, 6.3 x 11 mm",
     "package": "Radial D6.3mm P2.5mm",
-    "pins": {"1": "+", "2": "-"},
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
     "v_max": 25,
     "i_max_a": null,
     "power_w": null,

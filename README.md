@@ -44,4 +44,4 @@ pytest
 
 See `docs/team_charter.md` for roles, Git workflow and Definition of Done.
 
-Setup done by SHAMMAS
+Setup done by HAMNA

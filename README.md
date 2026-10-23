@@ -43,3 +43,5 @@ pytest
 | `docs/` | SRS, architecture, team charter, sprint reports |
 
 See `docs/team_charter.md` for roles, Git workflow and Definition of Done.
+
+Setup done by SHAMMAS

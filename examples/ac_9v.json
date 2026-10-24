@@ -1,0 +1,49 @@
+{
+  "request": "Regulated 9V 1A supply from a 12V AC transformer, 6x8 cm.",
+  "spec": {
+    "project_type": "power_supply",
+    "summary": "9 V 1 A regulated supply from a 12 V AC transformer.",
+    "input": {
+      "kind": "AC_transformer",
+      "voltage_v": 12,
+      "current_a": null
+    },
+    "outputs": [
+      {
+        "name": "9V",
+        "v_min": 9,
+        "v_max": 9,
+        "i_max_a": 1.0
+      }
+    ],
+    "board": {
+      "width_mm": 60,
+      "height_mm": 80,
+      "layers": 1,
+      "mounting": "THT",
+      "max_height_mm": null
+    },
+    "budget": "low",
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "warnings": []
+  },
+  "plan": {
+    "blocks": [
+      {
+        "template_id": "fixed_regulator",
+        "rail_name": "9V",
+        "v_out": 9,
+        "v_out_min": null,
+        "v_out_max": null,
+        "i_out_a": 1.0,
+        "led_count": null,
+        "led_color": null,
+        "led_current_ma": null,
+        "frequency_hz": null
+      }
+    ],
+    "reverse_protection": false,
+    "explanation": "Bridge rectifier and filter, then a 7809."
+  }
+}

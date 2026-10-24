@@ -3,14 +3,14 @@ Version 1.0 · Sprint 1 · EC-360 · Team: Hamdan, Afaq, Shammas, Hamna
 
 ## 1. Introduction
 ### 1.1 Purpose
-(2-3 sentences: what the system does and who this document is for.)
+The AI PCB Designer turns a plain-English request, such as "a 5 V fixed and 1-12 V variable power supply", into a printable single-layer through-hole PCB design. It asks questions when information is missing, builds the circuit from validated templates, produces a parts list and a design report, and builds the board in EasyEDA Pro. This document is for the project team, our instructors and anyone who needs to know what the system must do.
 ### 1.2 Scope
-(What it does: plain-English request -> hand-etchable single-layer THT PCB.
- What it does NOT do: SMD, multi-layer, free-form circuits.)
+The system takes a plain-English request and produces a hand-etchable, single-layer, through-hole PCB design with a spec, a netlist, a parts list with LCSC numbers and a design report.
+The system does NOT handle SMD parts, multi-layer boards or free-form circuits that are not in our templates.
 
 ## 2. Overall description
 ### 2.1 Users
-(Students and hobbyists who can etch a board but can't design one.)
+Students and hobbyists who can etch a board at home but cannot design one. They do not need circuit-design knowledge, because the tool chooses the circuit and calculates the values.
 ### 2.2 Constraints
 - Single layer, through-hole only, about 25 components max, rectangular board
 - Circuits come only from validated templates
@@ -33,10 +33,12 @@ Version 1.0 · Sprint 1 · EC-360 · Team: Hamdan, Afaq, Shammas, Hamna
 | FR-10 | Web interface (Streamlit) | 4 |
 
 ## 4. Non-functional requirements
-(Write 5-6 lines, e.g.: geometry is done by EasyEDA and deterministic code, never by the LLM;
- the LLM never writes EasyEDA code, only picks from fixed actions;
- each stage responds in under 30 s; API keys are never committed;
- every new function has a pytest test; runs on Windows and Linux.)
+- All geometry is done by EasyEDA and deterministic code, never by the LLM.
+- The LLM never writes component values or EasyEDA code. It only picks from fixed templates and actions.
+- Each stage should respond in under 30 seconds.
+- API keys are never committed to the repository.
+- Every new function has a pytest test.
+- The tool runs on Windows and Linux.
 
 ## 5. Architecture
 See docs/architecture.md.

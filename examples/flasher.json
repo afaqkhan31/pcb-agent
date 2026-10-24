@@ -1,0 +1,42 @@
+{
+  "request": "LED flasher using a 555 timer, blinks about once per second, runs on a 9V battery. 4x5 cm.",
+  "spec": {
+    "project_type": "timer",
+    "summary": "555 astable LED flasher at about 1 Hz from a 9 V battery.",
+    "input": {
+      "kind": "battery",
+      "voltage_v": 9,
+      "current_a": null
+    },
+    "outputs": [],
+    "board": {
+      "width_mm": 40,
+      "height_mm": 50,
+      "layers": 1,
+      "mounting": "THT",
+      "max_height_mm": null
+    },
+    "budget": "low",
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "warnings": []
+  },
+  "plan": {
+    "blocks": [
+      {
+        "template_id": "ne555_flasher",
+        "rail_name": null,
+        "v_out": null,
+        "v_out_min": null,
+        "v_out_max": null,
+        "i_out_a": null,
+        "led_count": null,
+        "led_color": "red",
+        "led_current_ma": 15,
+        "frequency_hz": 1
+      }
+    ],
+    "reverse_protection": true,
+    "explanation": "555 astable at 1 Hz driving one red LED (default 15 mA)."
+  }
+}

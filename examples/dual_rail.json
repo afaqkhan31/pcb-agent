@@ -1,0 +1,70 @@
+{
+  "request": "Power supply with 2 outputs: 5V fixed and 1-12V variable. 8x10 cm, single layer, low budget. (Answers: 12V DC adapter, 1A total, 0.5A on each rail.)",
+  "spec": {
+    "project_type": "power_supply",
+    "summary": "Dual-rail supply: fixed 5 V and adjustable 1.25-8 V from a 12 V adapter.",
+    "input": {
+      "kind": "DC_adapter",
+      "voltage_v": 12,
+      "current_a": 1.0
+    },
+    "outputs": [
+      {
+        "name": "5V",
+        "v_min": 5,
+        "v_max": 5,
+        "i_max_a": 0.5
+      },
+      {
+        "name": "VAR",
+        "v_min": 1.25,
+        "v_max": 8,
+        "i_max_a": 0.5
+      }
+    ],
+    "board": {
+      "width_mm": 80,
+      "height_mm": 100,
+      "layers": 1,
+      "mounting": "THT",
+      "max_height_mm": null
+    },
+    "budget": "low",
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "warnings": [
+      "1V requested; LM317 minimum is ~1.25V, so the variable rail starts at 1.25V",
+      "12V requested on the variable rail, but a 12V input leaves no headroom for a linear regulator; the variable rail is limited to 8V"
+    ]
+  },
+  "plan": {
+    "blocks": [
+      {
+        "template_id": "fixed_regulator",
+        "rail_name": "5V",
+        "v_out": 5,
+        "v_out_min": null,
+        "v_out_max": null,
+        "i_out_a": 0.5,
+        "led_count": null,
+        "led_color": null,
+        "led_current_ma": null,
+        "frequency_hz": null
+      },
+      {
+        "template_id": "adjustable_regulator",
+        "rail_name": "VAR",
+        "v_out": null,
+        "v_out_min": 1.25,
+        "v_out_max": 8,
+        "i_out_a": 0.5,
+        "led_count": null,
+        "led_color": null,
+        "led_current_ma": null,
+        "frequency_hz": null
+      }
+    ],
+    "reverse_protection": true,
+    "explanation": "One 7805 for the fixed rail, one LM317 for the variable rail. A 12 V input cannot give 12 V out of a linear regulator (needs 2.5 V headroom), so the variable rail is limited to 8 V."
+  }
+}

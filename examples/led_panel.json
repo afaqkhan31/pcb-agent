@@ -1,0 +1,42 @@
+{
+  "request": "A 12V DC adapter powered board that drives 10 white LEDs at 20mA each. Around 5x5 cm.",
+  "spec": {
+    "project_type": "led",
+    "summary": "Board driving 10 white LEDs at 20 mA from 12 V.",
+    "input": {
+      "kind": "DC_adapter",
+      "voltage_v": 12,
+      "current_a": null
+    },
+    "outputs": [],
+    "board": {
+      "width_mm": 50,
+      "height_mm": 50,
+      "layers": 1,
+      "mounting": "THT",
+      "max_height_mm": null
+    },
+    "budget": "low",
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "warnings": []
+  },
+  "plan": {
+    "blocks": [
+      {
+        "template_id": "led_array",
+        "rail_name": null,
+        "v_out": null,
+        "v_out_min": null,
+        "v_out_max": null,
+        "i_out_a": null,
+        "led_count": 10,
+        "led_color": "white",
+        "led_current_ma": 20,
+        "frequency_hz": null
+      }
+    ],
+    "reverse_protection": false,
+    "explanation": "LED strings straight from the 12 V input; no regulator needed."
+  }
+}

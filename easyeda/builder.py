@@ -172,6 +172,7 @@ def stage_sch(b: Bridge, netlist: Netlist) -> bool:
 
 def stage_erc(b: Bridge, netlist: Netlist) -> bool:
     errors = b.run(JS_ERC) or []
+    save_board_result(CURRENT_NETLIST_PATH, "erc.json", errors)
     fatal = [e for e in errors if e.get("type") in ("fatalError", "error")]
     print(f"  ERC: {len(fatal)} error(s), {len(errors) - len(fatal)} warning(s)")
     for e in errors[:20]:
@@ -214,6 +215,7 @@ def stage_pcb(b: Bridge, netlist: Netlist) -> bool:
 
 def stage_drc(b: Bridge, netlist: Netlist) -> bool:
     errors = b.run(JS_DRC) or []
+    save_board_result(CURRENT_NETLIST_PATH, "drc.json", errors)
     print(f"  DRC: {len(errors)} issue(s)")
     for e in errors[:20]:
         print("   -", json.dumps(e, default=str)[:160])
@@ -237,6 +239,8 @@ def main() -> int:
     if len(sys.argv) != 3 or sys.argv[1] not in STAGES:
         print("Usage: python -m easyeda.builder [" + "|".join(STAGES) + "] path/to/netlist.json")
         return 1
+    global CURRENT_NETLIST_PATH
+    CURRENT_NETLIST_PATH = sys.argv[2]
     netlist = Netlist.model_validate_json(Path(sys.argv[2]).read_text(encoding="utf-8"))
     try:
         return 0 if run_stages(netlist, [sys.argv[1]]) else 2
@@ -423,6 +427,15 @@ def save(name: str, data: object) -> None:
     )
     print("  saved", path)
 
+def save_board_result(netlist_path: str, filename: str, data: object) -> None:
+    board_dir = Path(netlist_path).parent
+    board_dir.mkdir(parents=True, exist_ok=True)
+    path = board_dir / filename
+    path.write_text(
+        json.dumps(data, indent=2, default=str),
+        encoding="utf-8"
+    )
+    print("  saved", path)
 
 def load_netlist(path: str) -> Netlist:
     file_path = Path(path)

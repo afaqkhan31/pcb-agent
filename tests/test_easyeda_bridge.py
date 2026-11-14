@@ -70,3 +70,34 @@ def test_schematic_js_contains_all_parts():
     for p in PARTS:
         assert p["lcsc"] in js
     assert "//" not in js                 # no JS comments (EasyEDA may run it as one line)
+
+
+def test_save_board_result(tmp_path):
+    from easyeda.builder import save_board_result
+
+    netlist_path = tmp_path / "dual_rail" / "netlist.json"
+    errors = [{"type": "error", "rule": "Unconnected net"}]
+
+    save_board_result(str(netlist_path), "erc.json", errors)
+
+    result_path = tmp_path / "dual_rail" / "erc.json"
+
+    assert result_path.exists()
+    assert json.loads(result_path.read_text(encoding="utf-8")) == errors
+
+
+def test_save_drc_result(tmp_path):
+    from easyeda.builder import save_board_result
+
+    netlist_path = tmp_path / "dual_rail" / "netlist.json"
+    errors = [
+        {"type": "error", "rule": "Clearance"},
+        {"type": "error", "rule": "Unconnected"}
+    ]
+
+    save_board_result(str(netlist_path), "drc.json", errors)
+
+    result_path = tmp_path / "dual_rail" / "drc.json"
+
+    assert result_path.exists()
+    assert json.loads(result_path.read_text(encoding="utf-8")) == errors

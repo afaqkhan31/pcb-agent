@@ -149,10 +149,10 @@ def step_parts(b: Bridge) -> None:
             print(f"  FAIL {r['lcsc']}: not in EasyEDA library (wrong number?)")
             ok = False
         elif looks_smd(r.get("footprint")):
-            print(f"  FAIL {r['lcsc']}: {r['name']} looks SMD ({r['footprint']})")
+            print(f"  FAIL {r['lcsc']}: {r.get('name', 'Unknown')} looks SMD ({r.get('footprint')})")
             ok = False
         else:
-            print(f"  OK   {r['lcsc']}: {r['name']}  footprint={r['footprint']}")
+            print(f"  OK   {r['lcsc']}: {r.get('name', 'Unknown')}  footprint={r.get('footprint')}")
     save("spike_parts.json", results)
     print("  All parts verified." if ok else "  Fix the failed numbers before step 3.")
 

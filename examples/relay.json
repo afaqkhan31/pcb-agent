@@ -1,0 +1,44 @@
+{
+  "request": "A 12V DC adapter powered board where a 5V Arduino pin switches a 12V relay for a 2A lamp. Around 5x5 cm.",
+  "spec": {
+    "project_type": "switching",
+    "summary": "Relay board: a 5 V logic signal switches a 12 V relay for a 2 A load.",
+    "input": {
+      "kind": "DC_adapter",
+      "voltage_v": 12,
+      "current_a": null
+    },
+    "outputs": [],
+    "board": {
+      "width_mm": 50,
+      "height_mm": 50,
+      "layers": 1,
+      "mounting": "THT",
+      "max_height_mm": null
+    },
+    "budget": "low",
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "warnings": []
+  },
+  "plan": {
+    "blocks": [
+      {
+        "template_id": "relay_driver",
+        "rail_name": null,
+        "v_out": null,
+        "v_out_min": null,
+        "v_out_max": null,
+        "i_out_a": null,
+        "led_count": null,
+        "led_color": null,
+        "led_current_ma": null,
+        "frequency_hz": null,
+        "control_voltage_v": 5,
+        "load_current_a": 2
+      }
+    ],
+    "reverse_protection": false,
+    "explanation": "NPN transistor switches the 12 V relay coil from a 5 V control signal; flyback diode protects the transistor."
+  }
+}

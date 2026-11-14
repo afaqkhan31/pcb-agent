@@ -113,6 +113,8 @@ class TemplateId(str, Enum):
     adjustable_regulator = "adjustable_regulator"
     led_array = "led_array"
     ne555_flasher = "ne555_flasher"
+    relay_driver = "relay_driver"
+    unregulated_output = "unregulated_output"
 
 
 class BlockRequest(BaseModel):
@@ -127,6 +129,10 @@ class BlockRequest(BaseModel):
     led_color: Optional[str] = Field(description="led_array / ne555_flasher: red, green, yellow, orange, blue or white")
     led_current_ma: Optional[float] = Field(description="led_array / ne555_flasher: current per LED in mA")
     frequency_hz: Optional[float] = Field(description="ne555_flasher: blink frequency in Hz")
+    control_voltage_v: Optional[float] = Field(
+    default=None, description="relay_driver: voltage of the signal that switches the relay (default 5)")
+    load_current_a: Optional[float] = Field(
+    default=None, description="relay_driver: current through the relay contacts, in amps")
 
 
 class DesignPlan(BaseModel):

@@ -32,9 +32,14 @@ values: the code computes those.
 
 Rules:
 - Only use numbers the user or the spec gave. If a needed number is missing, use the documented
-  default (LED current 15 mA, LED colour red) and say so in the explanation.
+  default (LED current 15 mA, LED colour red, relay control voltage 5 V, relay load 1 A) and say so
+  in the explanation.
 - Set reverse_protection to true for DC adapters and batteries, unless the input is less than
   1 V + 2.5 V above the highest regulated output (the diode costs about 1 V). False for AC input.
+- relay_driver: the input voltage powers the relay coil, so it must be 5 V or 12 V. With a 5 V
+  input set reverse_protection to false (the diode would drop the coil below its tolerance).
+- unregulated_output only works with AC transformer input. If the user wants a regulated or DC
+  adapter supply, do not use it.
 - Leave fields that don't apply to a block as null.
 """
 

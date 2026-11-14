@@ -29,6 +29,9 @@ def e24_up(value: float) -> float:
     """Smallest E24 value >= value (e.g. LED resistors: round up = less current)."""
     return min(c for c in _e24_candidates(value) if c >= value * 0.9999)
 
+def e24_down(value: float) -> float:
+    """Largest E24 value <= value (e.g. base resistors: round down = more base current)."""
+    return max(c for c in _e24_candidates(value) if c <= value * 1.0001)
 
 def fmt_ohms(r: float) -> str:
     """240 -> '240', 4700 -> '4.7k', 75000 -> '75k', 1e6 -> '1M'."""

@@ -179,7 +179,19 @@ def stage_erc(b: Bridge, netlist: Netlist) -> bool:
         print(f"   - [{e.get('type')}] {e.get('rule')} net={e.get('net')}")
     return not fatal
 
+def routing_complete(result: dict) -> bool:
+    success = result.get("successNetsCount")
+    total = result.get("totalNetsCount")
 
+    return (
+        isinstance(success, int)
+        and not isinstance(success, bool)
+        and isinstance(total, int)
+        and not isinstance(total, bool)
+        and total > 0
+        and success == total
+        and not result.get("failedNets")
+    )
 
 def stage_pcb(b: Bridge, netlist: Netlist) -> bool:
     print("  import from schematic:", b.run(JS_IMPORT))
@@ -199,7 +211,8 @@ def stage_pcb(b: Bridge, netlist: Netlist) -> bool:
 
     print(f"  routed {r.get('successNetsCount')}/{r.get('totalNetsCount')} nets on BOTTOM; failed: {r.get('failedNets')}")
 
-    if r.get("failedNets"):
+    if not routing_complete(r):
+        print("  ERROR: PCB routing incomplete")
         return False
 
     print("  verifying routed PCB...")

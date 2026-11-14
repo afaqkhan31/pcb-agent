@@ -101,3 +101,37 @@ def test_save_drc_result(tmp_path):
 
     assert result_path.exists()
     assert json.loads(result_path.read_text(encoding="utf-8")) == errors
+
+def test_incomplete_routing_rejected():
+    from easyeda.builder import routing_complete
+
+    assert routing_complete({
+        "successNetsCount": 3,
+        "totalNetsCount": 5,
+        "failedNets": []
+    }) is False
+
+def test_successful_routing_accepted():
+    from easyeda.builder import routing_complete
+
+    assert routing_complete({
+        "successNetsCount": 5,
+        "totalNetsCount": 5,
+        "failedNets": []
+    }) is True
+
+def test_failed_nets_rejected():
+    from easyeda.builder import routing_complete
+
+    assert routing_complete({
+        "successNetsCount": 4,
+        "totalNetsCount": 5,
+        "failedNets": ["GND"]
+    }) is False
+
+def test_missing_routing_counts_rejected():
+    from easyeda.builder import routing_complete
+
+    assert routing_complete({
+        "failedNets": []
+    }) is False

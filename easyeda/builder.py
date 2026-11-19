@@ -262,7 +262,7 @@ def main() -> int:
         return 3
 
 # --- Integrated non-destructive PCB inspection helpers ---
-from check_connectivity import check_connectivity
+from easyeda.connectivity import check_connectivity
 OUT = Path("output")
 BOTTOM_LAYER = 2
 MIL_PER_MM = 1 / 0.0254

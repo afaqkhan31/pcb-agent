@@ -10,6 +10,8 @@ Blocks:
   adjustable_regulator LM317 with pot (+ optional limit resistor)
   led_array            LED strings with series resistors
   ne555_flasher        555 astable driving one LED
+  relay_driver         NPN transistor + flyback diode switching a 5 V or 12 V relay
+  unregulated_output   rectifier + filter capacitor only (AC input)
 
 Owner: Hamdan.  Rules come from datasheets; tune the constants below.
 """
@@ -18,7 +20,7 @@ from __future__ import annotations
 import math
 
 from core.components import load_components
-from core.values import (ELEC_UF, e24_nearest, e24_up, elec_key, elec_voltage_rating,
+from core.values import (ELEC_UF, e24_down, e24_nearest, e24_up, elec_key, elec_voltage_rating,
                          fmt_ohms, fmt_uf, resistor_power_key)
 from templates.board import Board, DesignError
 
@@ -44,6 +46,14 @@ NE555_VCC = (4.5, 16.0)
 NE555_HIGH_DROP_V = 1.7       # output high is about Vcc - 1.7 V at 20 mA
 NE555_R1 = 1000.0
 TIMING_CAPS_UF = [10.0, 100.0, 1.0]   # preference order
+RELAYS = {5.0: ("RELAY-SRD-05VDC-SL-C", 70.0), 12.0: ("RELAY-SRD-12VDC-SL-C", 400.0)}  # coil V: (key, coil ohms)
+RELAY_COIL_TOL = 0.10        # supply may be +/-10% of the coil voltage
+RELAY_CONTACT_MAX_A = 10.0
+NPN_KEY = "PN2222A"          # TO-92, 600 mA
+NPN_MAX_A = 0.5
+VBE_V = 0.7
+FORCED_BETA = 10
+BASE_PULLDOWN = 10_000.0
 
 
 # ----------------------------------------------------------------- helpers
@@ -335,3 +345,81 @@ def ne555_flasher(board: Board, v_supply: float, frequency_hz: float, color: str
         f"555: f = 1.44 / ((R1 + 2 R2) C), R1 = 1k, C = {fmt_uf(c_uf)}: R2 = {r2_ideal / 1000:.1f}k -> "
         f"{fmt_ohms(r2)}, f = {f_real:.2f} Hz, duty {duty:.0f}%. "
         f"LED R = ({v_supply:.1f} - {NE555_HIGH_DROP_V} - {vf}) / {i} -> {fmt_ohms(r_led)}.")
+
+
+# ----------------------------------------------------------------- relay driver
+def relay_driver(board: Board, v_supply: float, control_v: float | None, load_a: float) -> None:
+    """NPN transistor switches a relay coil; flyback diode across the coil."""
+    coil_v = next((v for v in sorted(RELAYS) if abs(v_supply - v) <= v * RELAY_COIL_TOL), None)
+    if coil_v is None:
+        raise DesignError(f"No relay coil for {v_supply:.1f} V; supported: 5 V or 12 V supply")
+    control_v = 5.0 if control_v is None else control_v
+    if not 2.0 <= control_v <= 24.0:
+        raise DesignError(f"Control voltage {control_v:g} V: supported range is 2-24 V.")
+    if not 0 < load_a <= RELAY_CONTACT_MAX_A:
+        raise DesignError(f"{load_a:g} A load: relay contacts support up to {RELAY_CONTACT_MAX_A:g} A.")
+
+    relay_key, coil_ohms = RELAYS[coil_v]
+    ic = coil_v / coil_ohms
+    if ic > NPN_MAX_A:
+        raise DesignError(f"Coil current {ic * 1000:.0f} mA is above the {NPN_MAX_A * 1000:.0f} mA transistor limit.")
+    ib = ic / FORCED_BETA
+    rb_ideal = (control_v - VBE_V) / ib
+    rb = e24_down(rb_ideal)               # round down = more base current = stays saturated
+    rb_watts = ib * ib * rb
+    board.blocks.append(f"relay_driver:{coil_v:g}V")
+
+    ctrl = board.net("CTRL_IN", "signal", ib)
+    base = board.net("BASE", "signal", ib)
+    coil_lo = board.net("COIL_LO", "power", ic)
+    com = board.net("LOAD_COM", "power", load_a)
+    no = board.net("LOAD_NO", "power", load_a)
+    nc = board.net("LOAD_NC", "power", load_a)
+
+    jc = _terminal(board, "Relay control input")
+    board.connect_2(jc, ctrl, "GND")
+    rbr = _resistor(board, rb, rb_watts, "Relay base resistor")
+    board.connect_2(rbr, ctrl, base)
+    rpd = _resistor(board, BASE_PULLDOWN, 0.001, "Relay base pull-down")
+    board.connect_2(rpd, base, "GND")
+
+    q = board.add_part("Q", NPN_KEY, NPN_KEY, "Relay driver NPN transistor", "npn")
+    board.connect(base, q, "B")
+    board.connect("GND", q, "E")
+    board.connect(coil_lo, q, "C")
+
+    k = board.add_part("K", relay_key, relay_key, f"{coil_v:g} V relay", "relay")
+    board.connect("VIN", k, "COIL1")
+    board.connect(coil_lo, k, "COIL2")
+    board.connect(com, k, "COM")
+    board.connect(no, k, "NO")
+    board.connect(nc, k, "NC")
+
+    d = board.add_part("D", "1N4007-TP", "1N4007-TP", "Relay flyback diode", "diode")
+    board.connect("VIN", d, "K")
+    board.connect(coil_lo, d, "A")
+
+    jl = board.add_part("J", "KF301-5.0-3P", "Screw terminal 3P", "Relay contacts (COM, NO, NC)", "terminal3")
+    board.connect(com, jl, "1")
+    board.connect(no, jl, "2")
+    board.connect(nc, jl, "3")
+
+    board.warnings.append("Relay contacts: low-voltage loads only. Do not switch mains on a hand-etched board.")
+    board.calculations.append(
+        f"Relay driver: {coil_v:g} V coil, {coil_ohms:g} ohm -> Ic = {coil_v:g}/{coil_ohms:g} = {ic * 1000:.1f} mA. "
+        f"Ib = Ic/{FORCED_BETA} = {ib * 1000:.2f} mA. "
+        f"Rb = ({control_v:g} - {VBE_V}) / Ib = {rb_ideal:.0f} -> {fmt_ohms(rb)} (E24 down), "
+        f"{rb_watts * 1000:.0f} mW. {fmt_ohms(BASE_PULLDOWN)} base pull-down; flyback diode 1N4007 across the coil.")
+
+
+# ----------------------------------------------------------------- rectifier only
+def unregulated_output(board: Board, kind: str | None, v_in_ac: float, i_out: float, v_min: float) -> None:
+    """Rectifier + filter cap (built by power_input) with just an output terminal."""
+    if kind != "AC_transformer":
+        raise DesignError("Rectifier-only output needs AC input; with a DC adapter just use its output.")
+    board.blocks.append("unregulated_output")
+    j = _terminal(board, "Unregulated output")
+    board.connect_2(j, "VIN", "GND")
+    board.calculations.append(
+        f"Unregulated output: {v_in_ac:g} V AC, {i_out:g} A -> minimum {v_min:.1f} V after ripple "
+        f"(see rectifier line). Not regulated: voltage rises at light load.")

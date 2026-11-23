@@ -14,6 +14,8 @@ from templates.board import Board, DesignError
 __all__ = ["Design", "DesignError", "build_design", "TEMPLATE_GUIDE"]
 
 DEFAULT_LED_MA = 15.0
+DEFAULT_LOAD_A = 1.0
+RELAY_DRIVER_A = 0.08         # worst-case coil + base current on the input
 
 # Shown to the Circuit Designer Agent so it knows what it can ask for.
 TEMPLATE_GUIDE = """Available circuit templates (the power input block is always added for you):
@@ -23,8 +25,13 @@ TEMPLATE_GUIDE = """Available circuit templates (the power input block is always
   led_color (red, green, yellow, orange, blue, white), led_current_ma (1-30, use 15 if not given).
 - ne555_flasher: 555 astable blinking one LED, powered from the input (4.5-16 V). Needs frequency_hz
   (0.1-1000), led_color, led_current_ma.
+- relay_driver: NPN transistor + flyback diode switching a relay. The input voltage must be 5 V or 12 V
+  (it powers the relay coil). Needs control_voltage_v (voltage of the signal that switches it, 2-24, use 5
+  if not given) and load_current_a (current through the relay contacts, <= 10, use 1 if not given).
+- unregulated_output: rectifier and filter capacitor only, output is not regulated. AC transformer input
+  ONLY. Needs i_out_a (<= 2).
 Use one regulator block per output rail. Linear regulators need input >= output + 2.5 V.
-Not supported (say so in explanation, return no blocks): switching regulators, relays,
+Not supported (say so in explanation, return no blocks): switching regulators,
 microcontrollers, SMD parts, multi-layer boards."""
 
 
@@ -58,6 +65,10 @@ def build_design(spec: Spec, plan: DesignPlan) -> Design:
             total += _need(b.i_out_a, "i_out_a", b.template_id.value)
         elif b.template_id == TemplateId.led_array:
             total += (b.led_count or 0) * (b.led_current_ma or DEFAULT_LED_MA) / 1000
+        elif b.template_id == TemplateId.relay_driver:
+            total += RELAY_DRIVER_A
+        elif b.template_id == TemplateId.unregulated_output:
+            total += _need(b.i_out_a, "i_out_a", b.template_id.value)
         else:
             total += 0.03
     total = round(total, 3)
@@ -84,6 +95,12 @@ def build_design(spec: Spec, plan: DesignPlan) -> Design:
         elif t == TemplateId.ne555_flasher:
             blocks.ne555_flasher(board, v_dc, _need(b.frequency_hz, "frequency_hz", t.value),
                                  b.led_color or "red", b.led_current_ma or DEFAULT_LED_MA)
+        elif t == TemplateId.relay_driver:
+            load_a = DEFAULT_LOAD_A if b.load_current_a is None else b.load_current_a
+            blocks.relay_driver(board, v_dc, b.control_voltage_v, load_a)
+        elif t == TemplateId.unregulated_output:
+            blocks.unregulated_output(board, spec.input.kind, v_in,
+                                      _need(b.i_out_a, "i_out_a", t.value), v_dc)
 
     netlist = board.to_netlist()          # runs the connectivity check
     unverified = sorted({p.catalog_key for p in netlist.parts if not p.pinout_verified})

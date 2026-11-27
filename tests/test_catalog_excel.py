@@ -48,7 +48,7 @@ def test_resistor_values_fill_lcsc_by_value(tmp_path):
     wb.save(path)
     entries, problems, _ = read_sheet(path)
     res = next(e for e in entries if e["mpn"] == "RES-0.25W")
-    assert problems == [] and res["lcsc_by_value"] == {"240": "C22222"} and res["power_w"] == 0.25
+    assert problems == [] and res["lcsc_by_value"]["240"] == "C22222" and res["power_w"] == 0.25
 
 
 def test_components_file_still_valid():

@@ -30,6 +30,55 @@
     "notes": "Band marks the cathode."
   },
   {
+    "mpn": "1N5408",
+    "lcsc": "C2460",
+    "category": "diode",
+    "description": "1000 V 3 A rectifier diode",
+    "package": "DO-201AD",
+    "pins": {
+      "1": "K",
+      "2": "A"
+    },
+    "v_max": 1000,
+    "i_max_a": 3,
+    "power_w": null,
+    "notes": "MDD 1N5408. Band marks the cathode (K). Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "W04M",
+    "lcsc": "C22470848",
+    "category": "bridge_rectifier",
+    "description": "400 V 1.5 A bridge rectifier, through-hole",
+    "package": "WOM (round, 4-pin)",
+    "pins": {
+      "1": "+",
+      "2": "AC1",
+      "3": "-",
+      "4": "AC2"
+    },
+    "v_max": 400,
+    "i_max_a": 1.5,
+    "power_w": null,
+    "notes": "GOODWORK W04M. OUT OF STOCK on 26 Nov; footprint is what matters for EasyEDA. In-stock alternative: Vishay W04G-E4/51 C145477 (check footprint). Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "KBP206",
+    "lcsc": "C2494",
+    "category": "bridge_rectifier",
+    "description": "600 V 2 A bridge rectifier, through-hole",
+    "package": "KBP",
+    "pins": {
+      "1": "+",
+      "2": "AC1",
+      "3": "AC2",
+      "4": "-"
+    },
+    "v_max": 600,
+    "i_max_a": 2,
+    "power_w": null,
+    "notes": "MDD KBP206. Datasheet: + ~ ~ - left to right from the front."
+  },
+  {
     "mpn": "L7805CV",
     "lcsc": "C111887",
     "category": "regulator",
@@ -44,6 +93,38 @@
     "i_max_a": 1.5,
     "power_w": null,
     "notes": "Needs about 2-3 V headroom. 0.33 uF in, 0.1 uF out."
+  },
+  {
+    "mpn": "L7809CV",
+    "lcsc": "C8091",
+    "category": "regulator",
+    "description": "9 V 1.5 A fixed linear regulator",
+    "package": "TO-220",
+    "pins": {
+      "1": "IN",
+      "2": "GND",
+      "3": "OUT"
+    },
+    "v_max": 35,
+    "i_max_a": 1.5,
+    "power_w": null,
+    "notes": "ST L7809CV. 1=IN, 2=GND (tab), 3=OUT. Needs 2-3 V headroom. Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "L7812CV",
+    "lcsc": "C2914",
+    "category": "regulator",
+    "description": "12 V 1.5 A fixed linear regulator",
+    "package": "TO-220",
+    "pins": {
+      "1": "IN",
+      "2": "GND",
+      "3": "OUT"
+    },
+    "v_max": 35,
+    "i_max_a": 1.5,
+    "power_w": null,
+    "notes": "ST L7812CV-DG. 1=IN, 2=GND (tab), 3=OUT. Pins: standard for package, verify in EasyEDA."
   },
   {
     "mpn": "LM317T",
@@ -83,6 +164,115 @@
     "notes": "TI NE555P. Supply 4.5-16 V, output up to 200 mA. Pins: standard for package, verify in EasyEDA."
   },
   {
+    "mpn": "POT-5K-RV09",
+    "lcsc": "C42414342",
+    "category": "potentiometer",
+    "description": "5k linear potentiometer, through-hole",
+    "package": "Through Hole, RV09 rotary",
+    "pins": {
+      "1": "1",
+      "2": "W",
+      "3": "3"
+    },
+    "v_max": 10,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "CTR R09711N0-FR20A13-B502-00Y, 50 mW. Middle pin = wiper. Alt trimmer: 3296W-1-502 C118907. Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "POT-10K-RV09",
+    "lcsc": "C42414336",
+    "category": "potentiometer",
+    "description": "10k linear potentiometer, through-hole",
+    "package": "Through Hole, RV09 rotary",
+    "pins": {
+      "1": "1",
+      "2": "W",
+      "3": "3"
+    },
+    "v_max": 20,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "CTR R09710GS-FB15A7.0-B103-000, 50 mW. Middle pin = wiper. Alt trimmer: 3296W-1-103 C118954. Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "RES-0.25W",
+    "lcsc": null,
+    "category": "resistor",
+    "description": "Resistor, 1/4 W, axial",
+    "package": "Axial 10.16 mm",
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "v_max": 250,
+    "i_max_a": null,
+    "power_w": 0.25,
+    "notes": "",
+    "lcsc_by_value": {
+      "120": "C1371058",
+      "240": "C58132",
+      "300": "C713985",
+      "1k": "C713997",
+      "1.8k": "C58672",
+      "3.6k": "C58655",
+      "68k": "C58630",
+      "470": "C58592",
+      "560": "C58635",
+      "820": "C2848612",
+      "1.3k": "C2848597",
+      "10k": "C57436"
+    }
+  },
+  {
+    "mpn": "RES-1W",
+    "lcsc": null,
+    "category": "resistor",
+    "description": "Resistor, 1 W, axial",
+    "package": "Axial 10.16 mm",
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "v_max": 250,
+    "i_max_a": null,
+    "power_w": 1.0,
+    "notes": "",
+    "lcsc_by_value": {
+      "470": "C172949"
+    }
+  },
+  {
+    "mpn": "CAP-CER-100NF-50V",
+    "lcsc": "C254085",
+    "category": "capacitor_ceramic",
+    "description": "100 nF 50 V ceramic capacitor, radial",
+    "package": "Through Hole, P=5.08mm",
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "v_max": 50,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Dersonic CC1H104MC1FD3F6C10MF, +/-20%. Not polarised."
+  },
+  {
+    "mpn": "CAP-CER-10NF-50V",
+    "lcsc": "C2761727",
+    "category": "capacitor_ceramic",
+    "description": "10 nF 50 V ceramic capacitor, radial",
+    "package": "Through Hole, P=5.08mm",
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "v_max": 50,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Dersonic CC1H103ZC1ED3F4D1100, +80/-20% (fine for decoupling). Not polarised."
+  },
+  {
     "mpn": "LED-5MM-RED",
     "lcsc": "C87271",
     "category": "led",
@@ -98,6 +288,51 @@
     "notes": "Everlight 333-2SURD/S530-A3, red, 20 mA, Vf about 2 V. CHECK: 5 V reverse voltage is a typical value, not on the LCSC page. Pins: standard for package, verify in EasyEDA. Longer leg is the anode (A)."
   },
   {
+    "mpn": "LED-5MM-WHITE",
+    "lcsc": "C2895480",
+    "category": "led",
+    "description": "5 mm white LED",
+    "package": "LED D5mm Through Hole",
+    "pins": {
+      "1": "K",
+      "2": "A"
+    },
+    "v_max": 5,
+    "i_max_a": 0.02,
+    "power_w": null,
+    "notes": "XINGLIGHT XL-502UWC, Vf about 3.3 V. Long leg = anode (A), flat side = cathode (K). Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "LED-3MM-GREEN",
+    "lcsc": "C2895476",
+    "category": "led",
+    "description": "3 mm green LED",
+    "package": "LED D3mm Through Hole",
+    "pins": {
+      "1": "K",
+      "2": "A"
+    },
+    "v_max": 5,
+    "i_max_a": 0.02,
+    "power_w": null,
+    "notes": "XINGLIGHT XL-302UGD, Vf about 3.6 V (pure green; template assumes 2.1 V, check). Long leg = anode. Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "CAP-ELEC-10UF-16V",
+    "lcsc": "C216302",
+    "category": "capacitor_electrolytic",
+    "description": "10 uF 16 V radial electrolytic capacitor",
+    "package": "Radial D4xL5mm P1.5mm",
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
+    "v_max": 16,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Huawei KF1C100MB050A00CV0. Long leg = +."
+  },
+  {
     "mpn": "CAP-ELEC-100UF-25V",
     "lcsc": "C44601",
     "category": "capacitor_electrolytic",
@@ -111,5 +346,148 @@
     "i_max_a": null,
     "power_w": null,
     "notes": "Use at most about 80% of rated voltage."
+  },
+  {
+    "mpn": "CAP-ELEC-100UF-50V",
+    "lcsc": "C134547",
+    "category": "capacitor_electrolytic",
+    "description": "100 uF 50 V radial electrolytic capacitor",
+    "package": "Radial D8xL11.5mm P3.5mm",
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
+    "v_max": 50,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Lelon RGA101M1HBKF-0811G. Low stock (310). Long leg = +."
+  },
+  {
+    "mpn": "CAP-ELEC-470UF-25V",
+    "lcsc": "C43839",
+    "category": "capacitor_electrolytic",
+    "description": "470 uF 25 V radial electrolytic capacitor",
+    "package": "Radial D8xL12mm P3.5mm",
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
+    "v_max": 25,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Chengx KM477M025F12RR0VH2FP0. Long leg = +."
+  },
+  {
+    "mpn": "CAP-ELEC-1000UF-25V",
+    "lcsc": "C89783",
+    "category": "capacitor_electrolytic",
+    "description": "1000 uF 25 V radial electrolytic capacitor",
+    "package": "Radial D10xL16mm P5mm",
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
+    "v_max": 25,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "CapXon KF102M025G160A. Long leg = +."
+  },
+  {
+    "mpn": "CAP-ELEC-2200UF-25V",
+    "lcsc": "C111500",
+    "category": "capacitor_electrolytic",
+    "description": "2200 uF 25 V radial electrolytic capacitor",
+    "package": "Radial D12.5xL25mm P5mm",
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
+    "v_max": 25,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Rubycon 25YXJ2200M12.5X25. Long leg = +."
+  },
+  {
+    "mpn": "CAP-ELEC-4700UF-25V",
+    "lcsc": "C45070",
+    "category": "capacitor_electrolytic",
+    "description": "4700 uF 25 V radial electrolytic capacitor",
+    "package": "Radial D16xL25mm P7.5mm",
+    "pins": {
+      "1": "+",
+      "2": "-"
+    },
+    "v_max": 25,
+    "i_max_a": null,
+    "power_w": null,
+    "notes": "Chengx KM478M025K25RR0VH2FP0. Long leg = +."
+  },
+  {
+    "mpn": "RELAY-SRD-05VDC-SL-C",
+    "lcsc": "C35449",
+    "category": "relay",
+    "description": "5 V coil SPDT relay, 10 A contacts",
+    "package": "Through Hole 19.2x15.6mm, 5 pins",
+    "pins": {
+      "1": "COIL1",
+      "2": "COM",
+      "3": "NC",
+      "4": "NO",
+      "5": "COIL2"
+    },
+    "v_max": 250,
+    "i_max_a": 10,
+    "power_w": null,
+    "notes": "Songle SRD-05VDC-SL-C, coil 5 V about 70 ohm. CHECK pin numbers against the EasyEDA footprint. Low-voltage loads only."
+  },
+  {
+    "mpn": "RELAY-SRD-12VDC-SL-C",
+    "lcsc": "C30431",
+    "category": "relay",
+    "description": "12 V coil SPDT relay, 10 A contacts",
+    "package": "Through Hole 19.2x15.6mm, 5 pins",
+    "pins": {
+      "1": "COIL1",
+      "2": "COM",
+      "3": "NC",
+      "4": "NO",
+      "5": "COIL2"
+    },
+    "v_max": 250,
+    "i_max_a": 10,
+    "power_w": null,
+    "notes": "Songle SRD-12VDC-SL-C, coil 12 V about 400 ohm. CHECK pin numbers against the EasyEDA footprint. Low-voltage loads only."
+  },
+  {
+    "mpn": "PN2222A",
+    "lcsc": "C903217",
+    "category": "transistor",
+    "description": "NPN transistor 40 V 600 mA, TO-92",
+    "package": "TO-92-3L",
+    "pins": {
+      "1": "E",
+      "2": "B",
+      "3": "C"
+    },
+    "v_max": 40,
+    "i_max_a": 0.6,
+    "power_w": null,
+    "notes": "onsemi PN2222ATA. Flat face toward you: 1=E, 2=B, 3=C (datasheet). Pins: standard for package, verify in EasyEDA."
+  },
+  {
+    "mpn": "KF301-5.0-3P",
+    "lcsc": "C474882",
+    "category": "connector",
+    "description": "3-pin 5.0 mm screw terminal block",
+    "package": "Through Hole P=5.0mm 1x3P",
+    "pins": {
+      "1": "1",
+      "2": "2",
+      "3": "3"
+    },
+    "v_max": 250,
+    "i_max_a": 17,
+    "power_w": null,
+    "notes": "Cixi Kefa KF301-5.0-3P. Pins: standard for package, verify in EasyEDA."
   }
 ]

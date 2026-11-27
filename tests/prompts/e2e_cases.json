@@ -42,7 +42,7 @@
   },
   {
     "id": "E05",
-    "prompt": "A 12V DC adapter powered board where a 5V Arduino pin switches a 12V relay for a 2A lamp. Around 5x5 cm.",
+    "prompt": "A 12V DC adapter powered board where a 5V Arduino pin switches a 12V relay for a 2A lamp. Around 5x5 cm.","prompt": "A 12V 1A DC adapter powered board where a 5V Arduino pin switches a 12V relay for a 2A lamp. Around 5x5 cm.",
     "expected_status": "built",
     "expected_blocks": [
       "relay_driver:12V"
@@ -52,7 +52,7 @@
   },
   {
     "id": "E06",
-    "prompt": "A 5V USB supply powers a board where a 3.3V microcontroller pin switches a 5V relay for a 1A load. Board 4x5 cm, single layer.",
+    "prompt": "A 5V 1A USB supply powers a board where a 3.3V microcontroller pin switches a 5V relay for a 1A load. Board 4x5 cm, single layer.",
     "expected_status": "built",
     "expected_blocks": [
       "relay_driver:5V"

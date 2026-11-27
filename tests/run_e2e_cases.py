@@ -11,6 +11,7 @@ Run:  python -m tests.run_e2e_cases
 Owner: Afaq.
 """
 import json
+import sys
 import time
 from pathlib import Path
 
@@ -78,6 +79,9 @@ def run_with_retry(prompt: str, tries: int = 4, wait_s: int = 15) -> dict:
 
 def main() -> None:
     cases = json.loads(CASES_FILE.read_text(encoding="utf-8"))
+    wanted = sys.argv[1:]
+    if wanted:
+        cases = [c for c in cases if c["id"] in wanted]
     results, passed = [], 0
 
     for case in cases:

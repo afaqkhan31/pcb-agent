@@ -1,0 +1,97 @@
+[
+  {
+    "id": "E01",
+    "prompt": "5V 1A supply from a 12V DC adapter using a linear regulator. Board 5x5 cm, single layer.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "fixed_regulator:5V"
+    ],
+    "forbidden_blocks": [],
+    "note": "Basic 7805 supply."
+  },
+  {
+    "id": "E02",
+    "prompt": "Power supply from a 15V DC adapter with two outputs: 5V 500mA fixed and 3-12V variable 500mA. Board 8x6 cm, single layer.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "fixed_regulator:",
+      "adjustable_regulator:"
+    ],
+    "forbidden_blocks": [],
+    "note": "Two rails: one 78xx and one LM317."
+  },
+  {
+    "id": "E03",
+    "prompt": "A 12V DC adapter powered board that drives 10 white LEDs at 20mA each. Around 5x5 cm.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "led_array:10xwhite"
+    ],
+    "forbidden_blocks": [],
+    "note": "LED array."
+  },
+  {
+    "id": "E04",
+    "prompt": "LED flasher using a 555 timer, blinks once per second, runs on a 9V battery. Board 4x4 cm, single layer.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "ne555_flasher:1Hz"
+    ],
+    "forbidden_blocks": [],
+    "note": "555 astable at 1 Hz."
+  },
+  {
+    "id": "E05",
+    "prompt": "A 12V DC adapter powered board where a 5V Arduino pin switches a 12V relay for a 2A lamp. Around 5x5 cm.","prompt": "A 12V 1A DC adapter powered board where a 5V Arduino pin switches a 12V relay for a 2A lamp. Around 5x5 cm.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "relay_driver:12V"
+    ],
+    "forbidden_blocks": [],
+    "note": "Relay driver, 12 V coil, 5 V control (Rb 1.3k by hand)."
+  },
+  {
+    "id": "E06",
+    "prompt": "A 5V 1A USB supply powers a board where a 3.3V microcontroller pin switches a 5V relay for a 1A load. Board 4x5 cm, single layer.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "relay_driver:5V"
+    ],
+    "forbidden_blocks": [],
+    "note": "Relay driver, 5 V coil, 3.3 V control. Input is 5 V, so no reverse-protection diode."
+  },
+  {
+    "id": "E07",
+    "prompt": "Unregulated DC supply from a 12V AC transformer: bridge rectifier and a big filter capacitor, 0.5A output, 5x7 cm board.",
+    "expected_status": "built",
+    "expected_blocks": [
+      "unregulated_output"
+    ],
+    "forbidden_blocks": [],
+    "note": "Rectifier and filter only (15.6 V peak, 4700 uF 25 V by hand)."
+  },
+  {
+    "id": "E08",
+    "prompt": "Make me a 4 layer SMD board for an ESP32 with USB-C. Board 6x4 cm.",
+    "expected_status": "refused",
+    "expected_blocks": [],
+    "forbidden_blocks": [],
+    "note": "Out of scope: SMD, multi-layer, microcontroller. Must not produce a design."
+  },
+  {
+    "id": "E09",
+    "prompt": "make me a cool led thing",
+    "expected_status": "needs_questions",
+    "expected_blocks": [],
+    "forbidden_blocks": [],
+    "note": "Too vague. Spec Agent must ask, no design."
+  },
+  {
+    "id": "E10",
+    "prompt": "5V 1A supply from a 6V battery using a linear regulator. Board 5x5 cm, single layer.",
+    "expected_status": "refused",
+    "expected_blocks": [],
+    "forbidden_blocks": [],
+    "note": "Linear regulator needs input >= output + 2.5 V, so 6 V in is not enough."
+  }
+]
